@@ -41,8 +41,8 @@ src/main/resources/application-*.yml
 !src/main/resources/application-sample.yml
 
 ### Docker ###
+docker/mysql/data
 docker/*.env
-!docker/sample.env
 docker/.DS_Store
 
 ### log ###
