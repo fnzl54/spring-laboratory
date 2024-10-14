@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name:
+  jpa:
+    show-sql:
+    properties:
+      hibernate:
+        format_sql:
+        use_sql_comments:
