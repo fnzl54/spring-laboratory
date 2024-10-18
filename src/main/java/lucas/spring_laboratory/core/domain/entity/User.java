@@ -1,6 +1,7 @@
 package lucas.spring_laboratory.core.domain.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +25,6 @@ public class User extends BaseEntity {
 
   private String email;
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
   private Set<Post> posts = new HashSet<>();
 }
