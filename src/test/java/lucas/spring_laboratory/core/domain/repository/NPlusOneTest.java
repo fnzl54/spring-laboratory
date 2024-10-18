@@ -1,12 +1,16 @@
 package lucas.spring_laboratory.core.domain.repository;
 
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import lucas.spring_laboratory.core.domain.entity.Post;
 import lucas.spring_laboratory.core.domain.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @SpringBootTest
 @ActiveProfiles("localhost")
 public class NPlusOneTest {
@@ -19,6 +23,20 @@ public class NPlusOneTest {
     System.out.println("== start ==");
     List<User> users = userJPARepository.findAll();
     System.out.println("== end ==");
+  }
+
+  @Test
+  @Transactional
+  void Lazy_type_사용_시_User_조회_후_Post_사용에서_N_plus_1_발생() {
+    log.info("== start ==");
+    List<User> users = userJPARepository.findAll();
+    log.info("== end ==");
+
+    for (User user : users) {
+      user.getPosts().stream()
+          .map(Post::getTitle)
+          .forEach(title -> log.info("User: {}, Post Title: {}", user.getName(), title));
+    }
   }
 
 }
