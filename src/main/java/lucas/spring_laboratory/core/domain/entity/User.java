@@ -3,6 +3,7 @@ package lucas.spring_laboratory.core.domain.entity;
 import static java.util.Collections.emptySet;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import java.util.Set;
 import lombok.AccessLevel;
@@ -25,6 +26,6 @@ public class User extends BaseEntity {
 
   private String email;
 
-  @OneToMany(mappedBy = "user")
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
   private Set<Post> posts = emptySet();
 }
