@@ -98,4 +98,19 @@ public class NPlusOneTest {
           .forEach(title -> log.info("User: {}, Post Title: {}", user.getName(), title));
     }
   }
+
+  @Test
+  @Transactional
+  void batch_size_사용하여_pagination_N_plus_1_해결() {
+    log.info("== start ==");
+    PageRequest pageRequest = PageRequest.of(0, 2);
+    Page<User> users = userJPARepository.findAllJoinPage(pageRequest);
+    log.info("== end ==");
+
+    for (User user : users) {
+      user.getPosts().stream()
+          .map(Post::getTitle)
+          .forEach(title -> log.info("User: {}, Post Title: {}", user.getName(), title));
+    }
+  }
 }
