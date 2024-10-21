@@ -12,4 +12,7 @@ public interface UserJPARepository extends JpaRepository<User, UUID> {
 
   @Query("select distinct u from User u left join u.posts")
   List<User> findAllJoin();
+
+  @Query("select distinct u from User u left join fetch u.posts")
+  List<User> findAllFetchJoin();
 }

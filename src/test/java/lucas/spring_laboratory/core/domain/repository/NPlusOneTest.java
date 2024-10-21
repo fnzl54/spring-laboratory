@@ -54,12 +54,25 @@ public class NPlusOneTest {
     }
   }
 
-
   @Test
   @Transactional
   void 단순_join과_연관관계_FetchType_EAGER_사용_시_N_plus_1_발생() {
     log.info("== start ==");
     List<User> users = userJPARepository.findAllJoin();
+    log.info("== end ==");
+
+    for (User user : users) {
+      user.getPosts().stream()
+          .map(Post::getTitle)
+          .forEach(title -> log.info("User: {}, Post Title: {}", user.getName(), title));
+    }
+  }
+
+  @Test
+  @Transactional
+  void fetch_join_사용_시_N_plus_1_해결() {
+    log.info("== start ==");
+    List<User> users = userJPARepository.findAllFetchJoin();
     log.info("== end ==");
 
     for (User user : users) {
