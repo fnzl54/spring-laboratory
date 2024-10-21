@@ -11,6 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lucas.spring_laboratory.core.domain.share.BaseEntity;
+import org.hibernate.annotations.BatchSize;
 
 @ToString
 @Getter
@@ -24,6 +25,7 @@ public class User extends BaseEntity {
 
   private String email;
 
+  @BatchSize(size = 100)
   @OneToMany(mappedBy = "user")
   private Set<Post> posts = new HashSet<>();
 }
