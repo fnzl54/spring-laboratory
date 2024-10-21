@@ -7,6 +7,8 @@ import lucas.spring_laboratory.core.domain.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,6 +75,21 @@ public class NPlusOneTest {
   void fetch_join_사용_시_N_plus_1_해결() {
     log.info("== start ==");
     List<User> users = userJPARepository.findAllFetchJoin();
+    log.info("== end ==");
+
+    for (User user : users) {
+      user.getPosts().stream()
+          .map(Post::getTitle)
+          .forEach(title -> log.info("User: {}, Post Title: {}", user.getName(), title));
+    }
+  }
+
+  @Test
+  @Transactional
+  void fetch_join_사용_시_pagination_문제() {
+    log.info("== start ==");
+    PageRequest pageRequest = PageRequest.of(0, 1);
+    Page<User> users = userJPARepository.findAllFetchJoinPage(pageRequest);
     log.info("== end ==");
 
     for (User user : users) {
