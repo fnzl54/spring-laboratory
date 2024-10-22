@@ -128,4 +128,18 @@ public class NPlusOneTest {
           .forEach(title -> log.info("User: {}, Post Title: {}", user.getName(), title));
     }
   }
+
+  @Test
+  @Transactional
+  void 둘_이상_Collection_fetch_join_불가능() {
+    log.info("== start ==");
+    List<User> users = userJPARepository.findAllWithPostsAndCommentsFetchJoin();
+    log.info("== end ==");
+
+    for (User user : users) {
+      user.getPosts().stream()
+          .map(Post::getTitle)
+          .forEach(title -> log.info("User: {}, Post Title: {}", user.getName(), title));
+    }
+  }
 }
