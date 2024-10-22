@@ -2,8 +2,8 @@ package lucas.spring_laboratory.core.domain.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,8 +25,8 @@ public class User extends BaseEntity {
   private String email;
 
   @OneToMany(mappedBy = "user")
-  private List<Post> posts = new ArrayList<>();
+  private Set<Post> posts = new HashSet<>();
 
   @OneToMany(mappedBy = "user")
-  private List<Comment> comments = new ArrayList<>();
+  private Set<Comment> comments = new HashSet<>();
 }
