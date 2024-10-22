@@ -23,4 +23,7 @@ public interface UserJPARepository extends JpaRepository<User, UUID> {
 
   @Query("select distinct u from User u left join u.posts")
   Page<User> findAllJoinPage(Pageable pageable);
+
+  @Query("select distinct u from User u left join fetch u.posts p left join fetch u.comments")
+  List<User> findAllWithPostsAndCommentsFetchJoin();
 }
