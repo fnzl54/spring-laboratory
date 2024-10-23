@@ -156,4 +156,19 @@ public class NPlusOneTest {
           .forEach(title -> log.info("User: {}, Post Title: {}", user.getName(), title));
     }
   }
+
+  @Test
+  @Transactional
+  void BatchSize_사용하여_둘_이상_Collection_join_가능() {
+    log.info("== start ==");
+    PageRequest pageRequest = PageRequest.of(0, 2);
+    Page<User> users = userJPARepository.findAllWithPostsAndCommentsFetchJoinPage(pageRequest);
+    log.info("== end ==");
+
+    for (User user : users) {
+      user.getPosts().stream()
+          .map(Post::getTitle)
+          .forEach(title -> log.info("User: {}, Post Title: {}", user.getName(), title));
+    }
+  }
 }
